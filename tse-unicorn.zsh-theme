@@ -21,16 +21,22 @@ prompt_pygmalion_precmd(){
   local exp_nocolor="$(print -P \"$base_prompt_nocolor$gitinfo_nocolor$post_prompt_nocolor\")"
   local prompt_length=${#exp_nocolor}
   local rvm='%{$fg[magenta]%}$(getrvmversion)%{$reset_color%}'
-
+#  local dm='%{$fg[cyan]%}$(docker-machine status)%{$reset_color%}'
   local nl=""
 
   #if [[ $prompt_length -gt 40 ]]; then
   #  nl=$'\n%{\r%}';
   #fi
+
   PROMPT="$base_prompt$nl$post_prompt"
-  RPROMPT="$rvm $gitinfo"
+
+  #if [[ $(git status) =~ [*fatal*] ]]; then
+    #RPROMPT="D:$dm R:$rvm G:$gitinfo"
+    RPROMPT="R:$rvm G:$gitinfo"
+  #else
+  #  RPROMPT="D:$dm R:$rvm"
+  #fi
+
 }
 
 prompt_setup_pygmalion
-
-
